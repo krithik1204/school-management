@@ -10,22 +10,24 @@ import AdminUsersPage from '../pages/admin/AdminUsersPage';
 import AdminTeachersPage from '../pages/admin/AdminTeachersPage';
 import AdminStudentsPage from '../pages/admin/AdminStudentsPage';
 import AdminReportsPage from '../pages/admin/AdminReportsPage';
+import NoRolePage from '../pages/NoRolePage';
 import MultiRoleDashboard from '../features/dashboard/MultiRoleDashboard';
 import ProtectedRoute from './ProtectedRoute';
 import RoleProtectedRoute from './RoleProtectedRoute';
 
 const AppRoutes = () => {
   const { isAuthenticated, roles } = useSelector((state) => state.auth);
+  const safeRoles = Array.isArray(roles) ? roles : [];
 
-  const defaultDashboard = roles.includes('ROLE_ADMIN')
+  const defaultDashboard = safeRoles.includes('ROLE_ADMIN')
     ? '/dashboard/admin'
-    : roles.includes('ROLE_PRINCIPAL')
+    : safeRoles.includes('ROLE_PRINCIPAL')
     ? '/dashboard/principal'
-    : roles.includes('ROLE_TEACHER')
+    : safeRoles.includes('ROLE_TEACHER')
     ? '/dashboard/teacher'
-    : roles.includes('ROLE_STUDENT')
+    : safeRoles.includes('ROLE_STUDENT')
     ? '/dashboard/student'
-    : '/login';
+    : '/dashboard/no-role';
 
   return (
     <Routes>
@@ -108,6 +110,7 @@ const AppRoutes = () => {
             </RoleProtectedRoute>
           }
         />
+        <Route path="no-role" element={<NoRolePage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

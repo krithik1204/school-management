@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 
 const MultiRoleDashboard = ({ roles }) => {
+  const safeRoles = Array.isArray(roles) ? roles : [];
   const links = [
     {
       to: 'admin/users',
@@ -40,7 +41,7 @@ const MultiRoleDashboard = ({ roles }) => {
   ];
 
   const availableLinks = links.filter((link) =>
-    link.roles.some((allowed) => roles.includes(allowed))
+    link.roles.some((allowed) => safeRoles.includes(allowed))
   );
 
   return (
