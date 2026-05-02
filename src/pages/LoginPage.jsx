@@ -60,53 +60,67 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="p-8 max-w-2xl mx-auto">
-      <h2 className="text-3xl font-semibold text-slate-900 mb-4">Login</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-700">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="user@school.com"
-            className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3"
-          />
+    <section className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Left side - School Image/Banner */}
+        <div className="hidden md:flex items-center justify-center">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-12 text-white shadow-lg">
+            <div className="text-6xl mb-4">🏫</div>
+            <h1 className="text-4xl font-bold text-center mb-4">School Management</h1>
+            <p className="text-lg text-center text-blue-100">Welcome back to your learning platform</p>
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="••••••••"
-            className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3"
-          />
-        </div>
+        {/* Right side - Login Form */}
+        <div className="bg-white rounded-2xl shadow-lg p-8">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8">Login</h2>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="user@school.com"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+              />
+            </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <button
-            type="submit"
-            className="rounded-lg bg-blue-600 text-white px-5 py-3 hover:bg-blue-700 transition-colors"
-            disabled={loading || saving}
-          >
-            {saving ? 'Logging in...' : 'Login'}
-          </button>
-          <button
-            type="button"
-            onClick={resetForm}
-            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-slate-700 hover:bg-slate-100 transition-colors"
-            disabled={loading || saving}
-          >
-            Reset
-          </button>
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="••••••••"
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+              />
+            </div>
 
-        {rejected && error && (
-          <div className="text-red-500">{error}</div>
-        )}
-      </form>
+            <div className="flex flex-col gap-2 pt-4">
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-blue-600 text-white px-4 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors"
+                disabled={loading || saving}
+              >
+                {saving ? 'Logging in...' : 'Login'}
+              </button>
+              <button
+                type="button"
+                onClick={resetForm}
+                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+                disabled={loading || saving}
+              >
+                Reset
+              </button>
+            </div>
+
+            {rejected && error && (
+              <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">{error}</div>
+            )}
+          </form>
+        </div>
+      </div>
     </section>
   );
 };
