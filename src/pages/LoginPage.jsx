@@ -12,6 +12,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { loading, saving, rejected, error, execute } = useApiCall();
 
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -80,13 +85,23 @@ const LoginPage = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="rounded-lg bg-blue-600 text-white px-5 py-3 hover:bg-blue-700 transition-colors"
-          disabled={loading || saving}
-        >
-          {saving ? 'Logging in...' : 'Login'}
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button
+            type="submit"
+            className="rounded-lg bg-blue-600 text-white px-5 py-3 hover:bg-blue-700 transition-colors"
+            disabled={loading || saving}
+          >
+            {saving ? 'Logging in...' : 'Login'}
+          </button>
+          <button
+            type="button"
+            onClick={resetForm}
+            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-slate-700 hover:bg-slate-100 transition-colors"
+            disabled={loading || saving}
+          >
+            Reset
+          </button>
+        </div>
 
         {rejected && error && (
           <div className="text-red-500">{error}</div>

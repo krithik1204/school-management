@@ -16,6 +16,18 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const { loading, saving, rejected, error, execute } = useApiCall();
 
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPhoneNumber('');
+    setMedicalRecordNumber('');
+    setGender('Male');
+    setDateOfBirth('');
+    setPassword('');
+    setRole('ROLE_STUDENT');
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const request = {
@@ -141,13 +153,23 @@ const RegisterPage = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="rounded-lg bg-blue-600 text-white px-5 py-3 hover:bg-blue-700 transition-colors"
-          disabled={loading || saving}
-        >
-          {saving ? 'Saving...' : 'Register and continue to login'}
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button
+            type="submit"
+            className="rounded-lg bg-blue-600 text-white px-5 py-3 hover:bg-blue-700 transition-colors"
+            disabled={loading || saving}
+          >
+            {saving ? 'Saving...' : 'Register and continue to login'}
+          </button>
+          <button
+            type="button"
+            onClick={resetForm}
+            className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-slate-700 hover:bg-slate-100 transition-colors"
+            disabled={loading || saving}
+          >
+            Reset
+          </button>
+        </div>
 
         {rejected && error && (
           <div className="text-red-500">{error}</div>
