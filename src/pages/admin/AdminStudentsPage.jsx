@@ -71,10 +71,6 @@ const AdminStudentsPage = () => {
     fetchStudents();
   }, []);
 
-  useEffect(() => {
-    fetchStudents();
-  }, [userFilter]);
-
   const fetchStudents = async () => {
     try {
       setFetchError('');
@@ -89,12 +85,7 @@ const AdminStudentsPage = () => {
         return;
       }
 
-      let endpoint = '/api/users/role/student';
-      if (userFilter === 'active') {
-        endpoint = '/api/users/role/student'; // We'll filter active on frontend for now
-      } else if (userFilter === 'inactive') {
-        endpoint = '/api/users/role/student'; // We'll filter inactive on frontend for now
-      }
+      const endpoint = '/api/users/role/student';
 
       const data = await execute(() =>
         fetch(`${resourceServerUrl}${endpoint}`, {
@@ -113,14 +104,6 @@ const AdminStudentsPage = () => {
         })
       );
 
-      let filteredData = data || [];
-      if (userFilter === 'active') {
-        filteredData = filteredData.filter(student => student.isActive);
-      } else if (userFilter === 'inactive') {
-        filteredData = filteredData.filter(student => !student.isActive);
-      }
-
-      setStudents(filteredData);
       setAllStudents(data || []);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);

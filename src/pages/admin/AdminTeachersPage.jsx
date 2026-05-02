@@ -71,10 +71,6 @@ const AdminTeachersPage = () => {
     fetchTeachers();
   }, []);
 
-  useEffect(() => {
-    fetchTeachers();
-  }, [userFilter]);
-
   const fetchTeachers = async () => {
     try {
       setFetchError('');
@@ -89,12 +85,7 @@ const AdminTeachersPage = () => {
         return;
       }
 
-      let endpoint = '/api/users/role/teacher';
-      if (userFilter === 'active') {
-        endpoint = '/api/users/role/teacher'; // We'll filter active on frontend for now
-      } else if (userFilter === 'inactive') {
-        endpoint = '/api/users/role/teacher'; // We'll filter inactive on frontend for now
-      }
+      const endpoint = '/api/users/role/teacher';
 
       const data = await execute(() =>
         fetch(`${resourceServerUrl}${endpoint}`, {
@@ -113,14 +104,6 @@ const AdminTeachersPage = () => {
         })
       );
 
-      let filteredData = data || [];
-      if (userFilter === 'active') {
-        filteredData = filteredData.filter(teacher => teacher.isActive);
-      } else if (userFilter === 'inactive') {
-        filteredData = filteredData.filter(teacher => !teacher.isActive);
-      }
-
-      setTeachers(filteredData);
       setAllTeachers(data || []);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
