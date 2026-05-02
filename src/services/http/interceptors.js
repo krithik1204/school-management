@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { API_CONFIG } from '../../config/api.config';
 
 // Request interceptor to add auth token
