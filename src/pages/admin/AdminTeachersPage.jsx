@@ -333,8 +333,8 @@ const AdminTeachersPage = () => {
                               <input
                                 type="email"
                                 value={editEmail}
-                                onChange={(e) => setEditEmail(e.target.value)}
-                                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                                readOnly
+                                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-slate-100 text-slate-600 cursor-not-allowed"
                               />
                             </div>
                             <div>
