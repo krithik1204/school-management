@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios from 'axios';
 import { API_CONFIG } from '../../config/api.config';
 import {
   requestInterceptor,
@@ -8,7 +8,7 @@ import {
 } from './interceptors';
 
 // Create axios instance with base configuration
-const httpClient: AxiosInstance = axios.create({
+const httpClient = axios.create({
   baseURL: API_CONFIG.BASE_URL,
   timeout: API_CONFIG.TIMEOUT,
   headers: {
@@ -27,6 +27,3 @@ export default httpClient;
 
 // Export additional utilities
 export { httpClient as axiosInstance };
-
-// Export types for convenience
-export type { AxiosInstance } from 'axios';

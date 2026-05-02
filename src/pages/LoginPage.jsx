@@ -1,22 +1,18 @@
-import { type FC, type FormEvent, useState } from 'react';
-import { type AxiosResponse } from 'axios';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login, type AuthenticationResponse } from '../features/auth/authApi';
+import { login } from '../features/auth/authApi';
 import { loginSuccess } from '../features/auth/authSlice';
 import { useApiCall } from '../hooks/useApiCall';
-import { type AppDispatch } from '../app/store';
 
-type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_PRINCIPAL' | '';
-
-const LoginPage: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+const LoginPage = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { loading, saving, rejected, error, execute } = useApiCall<AxiosResponse<AuthenticationResponse>>();
+  const { loading, saving, rejected, error, execute } = useApiCall();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await execute(() => login({ email, password }), { saving: true });
@@ -27,7 +23,7 @@ const LoginPage: FC = () => {
       const userLastName = response?.data?.user?.lastName || '';
       const userFullName = `${userFirstName} ${userLastName}`.trim();
       const userId = response?.data?.user?.id ? String(response.data.user.id) : null;
-      const userRoles = responseRoles as UserRole[];
+      const userRoles = responseRoles;
 
       if (!accessToken) {
         alert('Invalid login response');

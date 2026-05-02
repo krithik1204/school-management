@@ -1,12 +1,9 @@
-import { type FC, type FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { type AxiosResponse } from 'axios';
-import { register, type UserRegistrationRequest, type UserRegistrationResponse } from '../features/auth/authApi';
+import { register } from '../features/auth/authApi';
 import { useApiCall } from '../hooks/useApiCall';
 
-type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_PRINCIPAL' | '';
-
-const RegisterPage: FC = () => {
+const RegisterPage = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,13 +12,13 @@ const RegisterPage: FC = () => {
   const [gender, setGender] = useState('Male');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<UserRole>('ROLE_STUDENT');
+  const [role, setRole] = useState('ROLE_STUDENT');
   const navigate = useNavigate();
-  const { loading, saving, rejected, error, execute } = useApiCall<AxiosResponse<UserRegistrationResponse>>();
+  const { loading, saving, rejected, error, execute } = useApiCall();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const request: UserRegistrationRequest = {
+    const request = {
       email,
       password,
       firstName,
@@ -100,7 +97,7 @@ const RegisterPage: FC = () => {
           <label className="block text-sm font-medium text-slate-700">Role</label>
           <select
             value={role}
-            onChange={(event) => setRole(event.target.value as UserRole)}
+            onChange={(event) => setRole(event.target.value)}
             className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-3"
           >
             <option value="ROLE_STUDENT">Student</option>

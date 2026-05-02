@@ -1,34 +1,23 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-
-export type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_PRINCIPAL' | '';
-
-export interface AuthState {
-  isAuthenticated: boolean;
-  fullName: string;
-  roles: UserRole[];
-  accessToken: string | null;
-  refreshToken: string | null;
-  userId: string | null;
-}
+import { createSlice } from '@reduxjs/toolkit';
 
 const storedAccessToken = sessionStorage.getItem('accessToken');
 const storedFullName = sessionStorage.getItem('fullName') ?? '';
 const storedRoles = (() => {
   const raw = sessionStorage.getItem('roles');
   if (!raw) {
-    return [] as UserRole[];
+    return [];
   }
 
   try {
-    return JSON.parse(raw) as UserRole[];
+    return JSON.parse(raw);
   } catch {
-    return [] as UserRole[];
+    return [];
   }
 })();
 const storedUserId = sessionStorage.getItem('userId');
 const storedRefreshToken = sessionStorage.getItem('refreshToken');
 
-const initialState: AuthState = {
+const initialState = {
   isAuthenticated: Boolean(storedAccessToken),
   fullName: storedFullName,
   roles: storedRoles,
@@ -43,13 +32,7 @@ const authSlice = createSlice({
   reducers: {
     loginSuccess: (
       state,
-      action: PayloadAction<{
-        fullName: string;
-        roles: UserRole[];
-        accessToken: string;
-        refreshToken?: string | null;
-        userId: string | null;
-      }>
+      action
     ) => {
       const { fullName, roles, accessToken, refreshToken, userId } = action.payload;
       state.isAuthenticated = true;

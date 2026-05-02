@@ -1,9 +1,8 @@
-import axios, { type AxiosResponse, type AxiosError, type InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { API_CONFIG } from '../../config/api.config';
-import { type ApiError, type ApiErrorResponse } from '../../types/api.types';
 
 // Request interceptor to add auth token
-export const requestInterceptor = (config: InternalAxiosRequestConfig) => {
+export const requestInterceptor = (config) => {
   const token = sessionStorage.getItem('accessToken');
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -12,15 +11,15 @@ export const requestInterceptor = (config: InternalAxiosRequestConfig) => {
 };
 
 // Response interceptor for success
-export const responseInterceptor = (response: AxiosResponse) => {
+export const responseInterceptor = (response) => {
   return response;
 };
 
 // Response interceptor for errors
-export const errorInterceptor = (error: AxiosError): Promise<AxiosError> => {
-  const errorData = error.response?.data as ApiErrorResponse | undefined;
+export const errorInterceptor = (error) => {
+  const errorData = error.response?.data;
 
-  const apiError: ApiError = {
+  const apiError = {
     message: errorData?.message || errorData?.error || error.message || 'An error occurred',
     status: error.response?.status || 500,
     code: error.code,
@@ -54,11 +53,8 @@ export const errorInterceptor = (error: AxiosError): Promise<AxiosError> => {
 };
 
 // Retry logic for failed requests
-export const retryInterceptor = (error: AxiosError) => {
-  const config = error.config as InternalAxiosRequestConfig & {
-    _retry?: boolean;
-    _retryCount?: number;
-  };
+export const retryInterceptor = (error) => {
+  const config = error.config;
 
   if (!config || !config._retry) {
     config._retry = true;

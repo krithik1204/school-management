@@ -1,13 +1,6 @@
-import { type FC } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
-type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_PRINCIPAL' | '';
-
-type MultiRoleDashboardProps = {
-  roles: UserRole[];
-};
-
-const MultiRoleDashboard: FC<MultiRoleDashboardProps> = ({ roles }) => {
+const MultiRoleDashboard = ({ roles }) => {
   const links = [
     {
       to: 'admin/users',
@@ -47,7 +40,7 @@ const MultiRoleDashboard: FC<MultiRoleDashboardProps> = ({ roles }) => {
   ];
 
   const availableLinks = links.filter((link) =>
-    link.roles.some((allowed) => roles.includes(allowed as UserRole))
+    link.roles.some((allowed) => roles.includes(allowed))
   );
 
   return (

@@ -1,7 +1,5 @@
-import { type FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../app/store';
 import RegisterPage from '../pages/RegisterPage';
 import LoginPage from '../pages/LoginPage';
 import AdminPage from '../pages/AdminPage';
@@ -16,10 +14,8 @@ import MultiRoleDashboard from '../features/dashboard/MultiRoleDashboard';
 import ProtectedRoute from './ProtectedRoute';
 import RoleProtectedRoute from './RoleProtectedRoute';
 
-type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_PRINCIPAL' | '';
-
-const AppRoutes: FC = () => {
-  const { isAuthenticated, roles } = useSelector((state: RootState) => state.auth);
+const AppRoutes = () => {
+  const { isAuthenticated, roles } = useSelector((state) => state.auth);
 
   const defaultDashboard = roles.includes('ROLE_ADMIN')
     ? '/dashboard/admin'

@@ -16,4 +16,4 @@ export const API_ENDPOINTS = {
   TEACHERS: '/api/teachers',
   STUDENTS: '/api/students',
   REPORTS: '/api/reports',
-} as const;
+};

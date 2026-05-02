@@ -1,34 +1,23 @@
-import { type FC, useState } from 'react';
+import { useState } from 'react';
 
-type UserRole = 'Admin' | 'Teacher' | 'Student' | 'Principal';
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  role: UserRole;
-};
-
-const initialUsers: User[] = [
+const initialUsers = [
   { id: 1, name: 'Alice Johnson', email: 'alice@school.com', role: 'Admin' },
   { id: 2, name: 'Brian Lee', email: 'brian@school.com', role: 'Teacher' },
   { id: 3, name: 'Cara Smith', email: 'cara@school.com', role: 'Student' },
 ];
 
-const roles: UserRole[] = ['Admin', 'Teacher', 'Student', 'Principal'];
+const roles = ['Admin', 'Teacher', 'Student', 'Principal'];
 
-type ActionType = 'view' | 'add' | 'edit' | 'delete';
-
-const AdminUsersPage: FC = () => {
-  const [users, setUsers] = useState<User[]>(initialUsers);
-  const [activeAction, setActiveAction] = useState<ActionType>('view');
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+const AdminUsersPage = () => {
+  const [users, setUsers] = useState(initialUsers);
+  const [activeAction, setActiveAction] = useState('view');
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
-  const [newRole, setNewRole] = useState<UserRole>('Student');
+  const [newRole, setNewRole] = useState('Student');
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
-  const [editRole, setEditRole] = useState<UserRole>('Admin');
+  const [editRole, setEditRole] = useState('Admin');
 
   const handleAddUser = () => {
     if (!newName.trim() || !newEmail.trim()) return;
@@ -46,7 +35,7 @@ const AdminUsersPage: FC = () => {
     setNewRole('Student');
   };
 
-  const startEdit = (user: User) => {
+  const startEdit = (user) => {
     setSelectedUserId(user.id);
     setEditName(user.name);
     setEditEmail(user.email);
@@ -67,7 +56,7 @@ const AdminUsersPage: FC = () => {
     setActiveAction('view');
   };
 
-  const deleteUser = (id: number) => {
+  const deleteUser = (id) => {
     setUsers((prev) => prev.filter((user) => user.id !== id));
     if (selectedUserId === id) {
       setSelectedUserId(null);
@@ -135,7 +124,7 @@ const AdminUsersPage: FC = () => {
                 <label className="block text-sm font-medium text-slate-700">Role</label>
                 <select
                   value={newRole}
-                  onChange={(event) => setNewRole(event.target.value as UserRole)}
+                  onChange={(event) => setNewRole(event.target.value)}
                   className="w-full rounded-2xl border border-slate-300 px-4 py-3"
                 >
                   {roles.map((role) => (
@@ -212,7 +201,7 @@ const AdminUsersPage: FC = () => {
                               <label className="block text-sm font-medium text-slate-700">Role</label>
                               <select
                                 value={editRole}
-                                onChange={(event) => setEditRole(event.target.value as UserRole)}
+                                onChange={(event) => setEditRole(event.target.value)}
                                 className="w-full rounded-2xl border border-slate-300 px-4 py-3"
                               >
                                 {roles.map((role) => (
@@ -297,7 +286,7 @@ const AdminUsersPage: FC = () => {
         </p>
 
         <div className="flex flex-wrap gap-3">
-          {(['view', 'add', 'edit', 'delete'] as ActionType[]).map((tab) => (
+          {(['view', 'add', 'edit', 'delete']).map((tab) => (
             <button
               key={tab}
               type="button"

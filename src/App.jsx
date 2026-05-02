@@ -1,17 +1,14 @@
-
 import './App.css';
-import { type FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout as logoutApi } from './features/auth/authApi';
 import { logout } from './features/auth/authSlice';
-import { type RootState, type AppDispatch } from './app/store';
 import AppRoutes from './routes/AppRoutes';
 
-const App: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+const App = () => {
+  const dispatch = useDispatch();
   const { isAuthenticated, fullName, roles, accessToken, userId } = useSelector(
-    (state: RootState) => state.auth
+    (state) => state.auth
   );
 
   const handleLogout = async () => {
@@ -47,7 +44,7 @@ const App: FC = () => {
             <>
               <span className="user-email">{fullName}</span>
               <span className="user-role">
-                {roles.map((role) => role.replace('ROLE_', '')).join(', ')}
+                {roles.map((role) => role.replace('ROLE_', '')) .join(', ')}
               </span>
               <button className="logout-btn" type="button" onClick={handleLogout}>
                 Logout
